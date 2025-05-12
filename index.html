@@ -2,36 +2,45 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Kalkulator za ugovore o djelu (do 700€)</title>
     <style>
-        body { font-family: Arial, sans-serif; margin: 20px; text-align: center; }
+        body { font-family: Arial, sans-serif; margin: 10px; font-size: 12px; text-align: center; }
         .container {
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 15px;
-            flex-wrap: wrap;
+            gap: 8px;
+            flex-wrap: nowrap;
         }
         input, button, select {
-            padding: 5px;
-            width: 150px;
+            padding: 3px;
+            font-size: 12px;
+            width: 100px;
+        }
+        .result-container {
+            margin-top: 10px;
         }
         .result {
-            margin-top: 15px;
             font-weight: bold;
-            margin-left: 10px;
+            font-size: 12px;
+            white-space: nowrap;
+        }
+        select {
+            width: 180px; /* Increased width for expanded options */
         }
     </style>
 </head>
 <body>
-    <h2>Kalkulator za ugovore o djelu (do 700€)</h2>
     <div class="container">
         <input type="number" id="neto" placeholder="Neto iznos" step="0.01" max="700">
         <select id="employed">
-            <option value="yes">Da</option>
-            <option value="no">Ne</option>
+            <option value="yes">U radnom odnosu</option>
+            <option value="no">Nije u radnom odnosu</option>
         </select>
         <button onclick="calculate()">Izračunaj</button>
+    </div>
+
+    <!-- Result container placed below the input row -->
+    <div class="result-container">
         <div class="result" id="result"></div>
     </div>
 
