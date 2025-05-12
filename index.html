@@ -25,8 +25,8 @@
     <div class="result" id="result"></div>
 
     <script>
-        function roundToLastDigit(num) {
-            return Math.round(num * 10) / 10;
+        function roundToTwoDecimalPlaces(num) {
+            return Math.round(num * 100) / 100;
         }
 
         function calculate() {
@@ -40,21 +40,21 @@
             }
 
             if (employed === "yes") {
-                porez = neto * 0.78212 * 0.15;
-                prirez = porez * 0.15;
+                porez = roundToTwoDecimalPlaces(neto * 0.78212 * 0.15);
+                prirez = roundToTwoDecimalPlaces(porez * 0.15);
             } else {
-                doprinosi = neto * 0.8485 * 0.10;
-                porez = neto * 0.8485 * 0.15;
-                prirez = porez * 0.15;
+                doprinosi = roundToTwoDecimalPlaces(neto * 0.8485 * 0.10);
+                porez = roundToTwoDecimalPlaces(neto * 0.8485 * 0.15);
+                prirez = roundToTwoDecimalPlaces(porez * 0.15);
             }
 
-            // Summing up all rounded components to calculate total cost
-            ukupniTrosak = roundToLastDigit(neto) + roundToLastDigit(doprinosi) + roundToLastDigit(porez) + roundToLastDigit(prirez);
+            // Sum up the rounded values
+            ukupniTrosak = roundToTwoDecimalPlaces(neto + doprinosi + porez + prirez);
 
             document.getElementById("result").innerHTML = `
-                Doprinosi: ${roundToLastDigit(doprinosi).toFixed(2)}<br>
-                Porez: ${roundToLastDigit(porez).toFixed(2)}<br>
-                Prirez: ${roundToLastDigit(prirez).toFixed(2)}<br>
+                Doprinosi: ${doprinosi.toFixed(2)}<br>
+                Porez: ${porez.toFixed(2)}<br>
+                Prirez: ${prirez.toFixed(2)}<br>
                 <strong>Ukupni trošak: ${ukupniTrosak.toFixed(2)} €</strong>
             `;
         }
