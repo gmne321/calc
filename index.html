@@ -87,8 +87,8 @@
         <h1>Kalkulator ukupnog troška ugovora o djelu</h1>
 
         <div class="form-group">
-            <label for="neto">Unesite neto iznos do 700€:</label>
-            <input type="number" id="neto" placeholder="Unesite neto iznos" step="0.01" max="700">
+            <label for="neto">Unesite neto iznos (€):</label>
+            <input type="number" id="neto" placeholder="Unesite neto iznos" step="0.01" min="0.01">
         </div>
 
         <div class="form-group">
@@ -120,8 +120,8 @@
             let doprinosi = 0, porez = 0, prirez = 0, ukupniTrosak = 0;
 
             // Validate neto input
-            if (isNaN(neto) || neto <= 0 || neto > 700) {
-                alert("Molimo unesite ispravan neto iznos (do 700€).");
+            if (isNaN(neto) || neto <= 0) {
+                alert("Molimo unesite pozitivan neto iznos.");
                 return;
             }
 
