@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Kalkulator za ugovore o djelu (do 700€)</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; text-align: center; }
+        input, button, select { margin: 5px; padding: 5px; width: 200px; }
+        .result { margin-top: 15px; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <h2>Kalkulator za ugovore o djelu (do 700€)</h2>
+    <label for="neto">Unesite neto iznos (do 700€):</label><br>
+    <input type="number" id="neto" placeholder="Neto iznos" step="0.01" max="700"><br>
+    
+    <label for="employed">Da li je osoba u radnom odnosu?</label><br>
+    <select id="employed">
+        <option value="yes">Da</option>
+        <option value="no">Ne</option>
+    </select><br>
+    
+    <button onclick="calculate()">Izračunaj</button>
+
+    <div class="result" id="result"></div>
+
+    <script>
+        function roundToLastDigit(num) {
+            return Math.round(num * 10) / 10;
+        }
+
+        function calculate() {
+            const neto = parseFloat(document.getElementById("neto").value);
+            const employed = document.getElementById("employed").value;
+            let osnovica = 0, doprinosi = 0, porez = 0, prirez = 0, ukupniTrosak = 0;
+
+            if (isNaN(neto) || neto <= 0 || neto > 700) {
+                alert("Molimo unesite ispravan neto iznos (do 700€).");
+                return;
+            }
+
+            if (employed === "yes") {
+                porez = roundToLastDigit(neto * 0.78212 * 0.15);
+                prirez = roundToLastDigit(porez * 0.15);
+                ukupniTrosak = neto + porez + prirez;
+            } else {
+                osnovica = neto * 0.8485;
+                doprinosi = roundToLastDigit(osnovica * 0.10);
+                porez = roundToLastDigit(osnovica * 0.15);
+                prirez = roundToLastDigit(porez * 0.15);
+                ukupniTrosak = neto + doprinosi + porez + prirez;
+            }
+
+            document.getElementById("result").innerHTML = `
+                Osnovica: ${osnovica.toFixed(2)}<br>
+                Doprinosi: ${doprinosi.toFixed(2)}<br>
+                Porez: ${porez.toFixed(2)}<br>
+                Prirez: ${prirez.toFixed(2)}<br>
+                <strong>Ukupni trošak: ${ukupniTrosak.toFixed(2)} €</strong>
+            `;
+        }
+    </script>
+</body>
+</html>
