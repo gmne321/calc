@@ -5,24 +5,35 @@
     <title>Kalkulator za ugovore o djelu (do 700€)</title>
     <style>
         body { font-family: Arial, sans-serif; margin: 20px; text-align: center; }
-        input, button, select { margin: 5px; padding: 5px; width: 200px; }
-        .result { margin-top: 15px; font-weight: bold; }
+        .container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        input, button, select {
+            padding: 5px;
+            width: 150px;
+        }
+        .result {
+            margin-top: 15px;
+            font-weight: bold;
+            margin-left: 10px;
+        }
     </style>
 </head>
 <body>
     <h2>Kalkulator za ugovore o djelu (do 700€)</h2>
-    <label for="neto">Unesite neto iznos (do 700€):</label><br>
-    <input type="number" id="neto" placeholder="Neto iznos" step="0.01" max="700"><br>
-    
-    <label for="employed">Da li je osoba u radnom odnosu?</label><br>
-    <select id="employed">
-        <option value="yes">Da</option>
-        <option value="no">Ne</option>
-    </select><br>
-    
-    <button onclick="calculate()">Izračunaj</button>
-
-    <div class="result" id="result"></div>
+    <div class="container">
+        <input type="number" id="neto" placeholder="Neto iznos" step="0.01" max="700">
+        <select id="employed">
+            <option value="yes">Da</option>
+            <option value="no">Ne</option>
+        </select>
+        <button onclick="calculate()">Izračunaj</button>
+        <div class="result" id="result"></div>
+    </div>
 
     <script>
         function roundToTwoDecimalPlaces(num) {
@@ -52,9 +63,9 @@
             ukupniTrosak = roundToTwoDecimalPlaces(neto + doprinosi + porez + prirez);
 
             document.getElementById("result").innerHTML = `
-                Doprinosi: ${doprinosi.toFixed(2)}<br>
-                Porez: ${porez.toFixed(2)}<br>
-                Prirez: ${prirez.toFixed(2)}<br>
+                Doprinosi: ${doprinosi.toFixed(2)} | 
+                Porez: ${porez.toFixed(2)} | 
+                Prirez: ${prirez.toFixed(2)} | 
                 <strong>Ukupni trošak: ${ukupniTrosak.toFixed(2)} €</strong>
             `;
         }
