@@ -2,46 +2,111 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Izračun Troška Ugovora o Djelu</title>
     <style>
-        body { font-family: Arial, sans-serif; margin: 10px; font-size: 12px; text-align: center; }
-        .container {
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f7f6;
+            color: #333;
+            margin: 0;
+            padding: 0;
             display: flex;
-            align-items: center;
             justify-content: center;
-            gap: 8px;
-            flex-wrap: nowrap;
+            align-items: center;
+            height: 100vh;
         }
-        input, button, select {
-            padding: 3px;
-            font-size: 12px;
-            width: 100px;
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 500px;
         }
-        .result-container {
-            margin-top: 10px;
+        h1 {
+            text-align: center;
+            color: #4CAF50;
         }
-        .result {
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
             font-weight: bold;
-            font-size: 12px;
-            white-space: nowrap;
+            margin-bottom: 5px;
+            font-size: 14px;
+        }
+        input, select, button {
+            width: 100%;
+            padding: 10px;
+            font-size: 14px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        input[type="number"] {
+            margin-bottom: 10px;
         }
         select {
-            width: 180px; /* Increased width for expanded options */
+            margin-bottom: 10px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .result {
+            margin-top: 20px;
+            background-color: #f0f8ff;
+            padding: 15px;
+            border: 1px solid #4CAF50;
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: bold;
+            text-align: center;
+        }
+        .result span {
+            display: block;
+            margin-bottom: 5px;
+        }
+        .result strong {
+            color: #4CAF50;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <input type="number" id="neto" placeholder="Neto iznos" step="0.01" max="700">
-        <select id="employed">
-            <option value="yes">U radnom odnosu</option>
-            <option value="no">Nije u radnom odnosu</option>
-        </select>
-        <button onclick="calculate()">Izračunaj</button>
-    </div>
 
-    <!-- Result container placed below the input row -->
-    <div class="result-container">
-        <div class="result" id="result"></div>
+    <div class="container">
+        <h1>Izračun Troška Ugovora o Djelu</h1>
+
+        <div class="form-group">
+            <label for="neto">Unesite neto iznos (€):</label>
+            <input type="number" id="neto" placeholder="Unesite neto iznos" step="0.01" max="700">
+        </div>
+
+        <div class="form-group">
+            <label for="employed">Da li je osoba u radnom odnosu?</label>
+            <select id="employed">
+                <option value="yes">U radnom odnosu</option>
+                <option value="no">Nije u radnom odnosu</option>
+            </select>
+        </div>
+
+        <button onclick="calculate()">Izračunaj</button>
+
+        <div class="result" id="result" style="display: none;">
+            <span>Doprinosi: <strong id="doprinosi"></strong></span>
+            <span>Porez: <strong id="porez"></strong></span>
+            <span>Prirez: <strong id="prirez"></strong></span>
+            <span><strong>Ukupni trošak: <span id="ukupniTrosak"></span> €</strong></span>
+        </div>
     </div>
 
     <script>
@@ -54,6 +119,7 @@
             const employed = document.getElementById("employed").value;
             let doprinosi = 0, porez = 0, prirez = 0, ukupniTrosak = 0;
 
+            // Validate neto input
             if (isNaN(neto) || neto <= 0 || neto > 700) {
                 alert("Molimo unesite ispravan neto iznos (do 700€).");
                 return;
@@ -68,16 +134,19 @@
                 prirez = roundToTwoDecimalPlaces(porez * 0.15);
             }
 
-            // Sum up the rounded values
+            // Calculate total cost with rounded values
             ukupniTrosak = roundToTwoDecimalPlaces(neto + doprinosi + porez + prirez);
 
-            document.getElementById("result").innerHTML = `
-                Doprinosi: ${doprinosi.toFixed(2)} | 
-                Porez: ${porez.toFixed(2)} | 
-                Prirez: ${prirez.toFixed(2)} | 
-                <strong>Ukupni trošak: ${ukupniTrosak.toFixed(2)} €</strong>
-            `;
+            // Display results
+            document.getElementById("doprinosi").innerText = doprinosi.toFixed(2);
+            document.getElementById("porez").innerText = porez.toFixed(2);
+            document.getElementById("prirez").innerText = prirez.toFixed(2);
+            document.getElementById("ukupniTrosak").innerText = ukupniTrosak.toFixed(2);
+            
+            // Show the result section
+            document.getElementById("result").style.display = 'block';
         }
     </script>
+
 </body>
 </html>
