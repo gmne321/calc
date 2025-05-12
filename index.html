@@ -25,10 +25,6 @@
     <div class="result" id="result"></div>
 
     <script>
-        function roundToLastDigit(num) {
-            return Math.round(num * 10) / 10;
-        }
-
         function calculate() {
             const neto = parseFloat(document.getElementById("neto").value);
             const employed = document.getElementById("employed").value;
@@ -40,14 +36,14 @@
             }
 
             if (employed === "yes") {
-                porez = roundToLastDigit(neto * 0.78212 * 0.15);
-                prirez = roundToLastDigit(porez * 0.15);
+                porez = neto * 0.78212 * 0.15;
+                prirez = porez * 0.15;
                 ukupniTrosak = neto + porez + prirez;
             } else {
                 osnovica = neto * 0.8485;
-                doprinosi = roundToLastDigit(osnovica * 0.10);
-                porez = roundToLastDigit(osnovica * 0.15);
-                prirez = roundToLastDigit(porez * 0.15);
+                doprinosi = osnovica * 0.10;
+                porez = osnovica * 0.15;
+                prirez = porez * 0.15;
                 ukupniTrosak = neto + doprinosi + porez + prirez;
             }
 
